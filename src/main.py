@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from bot_actions import admin_login
+from bot_actions import admin_login, admin_signup
 
 
 app = QApplication(sys.argv)
@@ -38,6 +38,7 @@ botLabel = QLabel('bot')
 # actions
 actionsLabel = QLabel('actions')
 loginButton = QPushButton('로그인')
+signupButton = QPushButton('회원가입')
 
 # form
 idInputLabel = QLabel('ID')
@@ -45,6 +46,13 @@ idInput = QLineEdit()
 
 passwordInputLabel = QLabel('PASSWORD')
 passwordInput = QLineEdit()
+
+nicknameInputLabel = QLabel('NICKNAME')
+nicknameInput = QLineEdit()
+
+emailInputLabel = QLabel('EMAIL')
+emailInput = QLineEdit()
+
 
 # status
 statusLabel = QLabel()
@@ -61,15 +69,24 @@ def setDisplay():
 
     # Action Button Section
     actionsTopLayout.addWidget(loginButton)
-
+    actionsTopLayout.addWidget(signupButton
+                               )
     # Action Input Section
     actionsBottomLayout.addWidget(QFrame())
+
+    # - InputLabel Grid
     actionsBottomLayout.addWidget(idInputLabel, 0, 0)
     actionsBottomLayout.addWidget(passwordInputLabel, 1, 0)
+    actionsBottomLayout.addWidget(nicknameInputLabel, 2, 0)
+    actionsBottomLayout.addWidget(emailInputLabel, 3, 0)
 
+    # - InputForm Grid
     actionsBottomLayout.addWidget(idInput, 0, 1)
     actionsBottomLayout.addWidget(passwordInput, 1, 1)
-    
+    actionsBottomLayout.addWidget(nicknameInput, 2, 1)
+    actionsBottomLayout.addWidget(emailInput, 3, 1)
+
+
     # 조립
     actionsTopSection.setLayout(actionsTopLayout)
     actionsBottomSection.setLayout(actionsBottomLayout)
@@ -102,6 +119,7 @@ def setStyles():
 
     # action Style
     loginButton.setStyleSheet('border: 1px solid black;width:100px;height:50px')
+    signupButton.setStyleSheet('border: 1px solid black;width:100px;height:50px')
     actionsSection.setMinimumSize(400, 800)
     actionsSection.setStyleSheet("border: 2px solid gray;")
     actionsTopSection.setStyleSheet("border:none;border-bottom: 1px solid gray")
@@ -119,6 +137,7 @@ def setStyles():
 # Event 추가
 def addListeners():
     loginButton.clicked.connect(lambda: admin_login(idInput, passwordInput, statusLabel, statusScrollArea))
+    signupButton.clicked.connect(lambda: admin_signup(idInput, passwordInput, nicknameInput, emailInput, statusLabel, statusScrollArea))
 # window 설정
 def showFrame():
     window.setWindowTitle('dry-web-bot')

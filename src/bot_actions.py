@@ -42,6 +42,27 @@ def admin_login(idInput, passwordInput, statusLabel, statusScrollArea):
         statusLabel.setText(text)
 
     statusScrollArea.verticalScrollBar().setValue(statusScrollArea.verticalScrollBar().maximum())
+
+def admin_signup(idInput, passwordInput, nicknameInput, emailInput, statusLabel, statusScrollArea):
+    data = {
+        'id': idInput.text(),
+        'password': passwordInput.text(),
+        'nickname': nicknameInput.text(),
+        'email': emailInput.text()
+    }
+    text = statusLabel.text()
+    time = getTime()
+
+    try:
+        json_data = json.dumps(data)
+        response = requests.post(SIGN_UP_URL, data=json_data, headers=HEADERS)
+        text += "\n[" + time + "] [" + idInput.text() + "]" + " sign-up : " + str(response.status_code)
+        statusLabel.setText(text)
+
+    except:
+        text += "\n[" + time + "] [" + idInput.text() + "]" + " sign-up : error"
+        statusLabel.setText(text)
+
 def getTime():
     current_time = datetime.datetime.now()
 
